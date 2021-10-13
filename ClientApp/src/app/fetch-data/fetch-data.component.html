@@ -1,0 +1,111 @@
+<a (click)="inAction = true" href="javascript:void(0)">Add</a>
+<table *ngIf="inAction">
+  <tr>
+    <td>First Name</td>
+    <td><input type="text" [(ngModel)]="currentRecord.firstName" /></td>
+  </tr>
+  <tr>
+    <td>Last Name</td>
+    <td><input type="text" [(ngModel)]="currentRecord.lastName" /></td>
+  </tr>
+  <tr>
+    <td>Address</td>
+    <td><input type="text" [(ngModel)]="currentRecord.address" /></td>
+  </tr>
+  <tr>
+    <td>Email</td>
+    <td><input type="text" [(ngModel)]="currentRecord.email" /></td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <input type="radio" id="student" name="fav_language" value="Student" [value]="true" [(ngModel)]="currentRecord.student">&nbsp;<label for="student">Student</label>
+      &nbsp;
+      <input type="radio" id="teacher" name="fav_language" value="Teacher" [value]="false" [(ngModel)]="currentRecord.student">&nbsp;<label for="teacher">Teacher</label>
+    </td>
+  </tr>
+  <tr>
+    <td>Grade</td>
+    <td>
+      <select [(ngModel)]="currentRecord.grade">
+        <option *ngFor="let grade of Grades" [value]="grade">{{grade}}</option>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td>Class</td>
+    <td>
+      <select [(ngModel)]="currentRecord.class">
+        <option *ngFor="let class of Classes" [value]="class">{{class}}</option>
+      </select>
+    </td>
+  </tr>
+  <tr *ngIf="!currentRecord.student">
+    <td>TeachingFrom</td>
+    <td><input type="text" [(ngModel)]="currentRecord.teachingFrom" /></td>
+  </tr>
+  <tr><td colspan="2">
+    <input type="button" value="Save" (click)="saveClick()" />
+    <input type="button" value="Cancel" (click)="inAction = false" /></td></tr>
+</table>
+
+<h1 id="tableLabel">Students</h1>
+
+<p *ngIf="!students"><em>Loading students...</em></p>
+
+<!--<ngx-datatable [columns]="studentcols" [rows]="students"> </ngx-datatable>-->
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="students">
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Address</th>
+      <th>Email</th>
+      <th>Grade</th>
+      <th>Class</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let student of students">
+      <td>{{ student.firstName }}</td>
+      <td>{{ student.lastName }}</td>
+      <td>{{ student.address }}</td>
+      <td>{{ student.email }}</td>
+      <td>{{ student.grade }}</td>
+      <td>{{ student.class }}</td>
+      <td><a (click)="inAction = true; currentRecord=student;currentRecord.student=true;" href="javascript:void(0)">Edit</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="tableLabel">Teachers</h1>
+
+
+<p *ngIf="!teachers"><em>Loading teachers...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="teachers">
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Address</th>
+      <th>Email</th>
+      <th>Grade</th>
+      <th>Class</th>
+      <th>Teaching From</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let teacher of teachers">
+      <td>{{ teacher.firstName }}</td>
+      <td>{{ teacher.lastName }}</td>
+      <td>{{ teacher.address }}</td>
+      <td>{{ teacher.email }}</td>
+      <td>{{ teacher.grade }}</td>
+      <td>{{ teacher.class }}</td>
+      <td>{{ teacher.teachingFrom }}</td>
+      <td><a (click)="inAction = true; currentRecord=teacher;currentRecord.student=false;" href="javascript:void(0)">Edit</a></td>
+    </tr>
+  </tbody>
+</table>
